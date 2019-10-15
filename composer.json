@@ -4,7 +4,6 @@
 	"keywords": ["recaptcha", "captcha", "laravel", "laravel5"],
 	"homepage": "http://github.com/greggilbert/recaptcha",
 	"license": "MIT",
-    "abandoned": true,
     "authors": [
         {
             "name": "Greg Gilbert",
