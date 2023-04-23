@@ -10,13 +10,23 @@ if ( ! function_exists('renderDataAttributes')) {
         return implode(' ', $mapped);
     }
 }
+$onlyScripts = $options['onlyScripts'] ?? false;
+$noScripts = $options['noScripts'] ?? false;
+foreach (['onlyScripts', 'noScripts'] as $key) {
+    if (isset($options[$key])) {
+        unset($options[$key]);
+    }
+}
 ?>
-@if(!empty($options))
-    <script type="text/javascript">
-        var RecaptchaOptions = <?=json_encode($options) ?>;
-    </script>
+@if(!$noScripts)
+    @if(!empty($options))
+        <script type="text/javascript">
+            var RecaptchaOptions = <?=json_encode($options) ?>;
+        </script>
+    @endif
+    <script src='https://www.google.com/recaptcha/api.js?render=onload{{ (isset($lang) ? '&hl='.$lang : '') }}'></script>
 @endif
-<script src='https://www.google.com/recaptcha/api.js?render=onload{{ (isset($lang) ? '&hl='.$lang : '') }}'></script>
+@if(!$onlyScripts)
 <div class="g-recaptcha" data-sitekey="{{ $public_key }}" <?=renderDataAttributes($dataParams)?>></div>
 <noscript>
     <div style="width: 302px; height: 352px;">
@@ -37,3 +47,4 @@ if ( ! function_exists('renderDataAttributes')) {
         </div>
     </div>
 </noscript>
+@endif
